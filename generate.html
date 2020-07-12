@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模板生成</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <style>
+    .wrapper{
+      height: 100vh;
+      display: flex;
+      position: relative;
+    }
+    pre{
+      width: 50%;
+      box-sizing: border-box;
+      border: 1px solid;
+      margin: 40px 20px;
+      padding: 10px;
+      float: left;
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    button{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0; right: 0;
+      margin: auto;
+      border: 4px solid;
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 700;
+      color: darkturquoise;
+      cursor: pointer;
+    }
+    .title{
+      position: absolute;
+      top: 10px; left: 0;
+      text-indent: 2em;
+      font-weight: 700;
+      color: darkturquoise;
+    }
+    #copy{
+      width: 60px;
+      height: 22px;
+      background: orange;
+      color: white;
+      text-align: center;
+      border-radius: 5px;
+      position: absolute;
+      top: 42px; right: 30px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper leayer">
+    <p class="title">Markdown 语法解析</p>
+    <pre id="markdown" contenteditable="true"></pre>
+    <pre id="code" contenteditable="true"></pre>
+    <button id="go">Go</button>
+    <span id="copy">copy</span>
+  </div>
+
+  <script src="./js/common.js"></script>
+  <script>
+    $('#go').on('click', function () {
+      var str = $('#markdown').text();
+      // console.log(str);
+      $('#code').text(interpretMd(str));
+    });
+    $('#copy').on('click', function () {
+      oCopy($('#code').text());
+    });
+
+    // 复制功能
+    function oCopy (text) {
+      var el = document.createElement('textarea');
+      el.value = startStr + text + endStr;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      // console.log(this)
+    }
+    </script>
+</body>
+</html>
